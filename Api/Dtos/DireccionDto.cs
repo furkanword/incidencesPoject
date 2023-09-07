@@ -2,6 +2,7 @@ namespace Api.Dtos
 {
     public class DireccionDto
     {
+        public int Id {get;set;}
         public string ? Neigborhood { get; set; }
         public string ? TypeWay  {get; set;}
         public string ? QuadrantPrefix {get; set;}

@@ -1,5 +1,6 @@
 using Api.Dtos;
 using AutoMapper;
+using Dominio;
 using Dominio.Interfaces;
 using Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -9,12 +10,12 @@ namespace ApiIncidencias.Controllers;
 [ApiVersion("1.0")]
 [ApiVersion("1.1")]
 
-public class CategoriaContactoController : BaseApiController
+public class DireccionController : BaseApiController
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public CategoriaContactoController(IUnitOfWork unitOfWork, IMapper mapper)
+    public DireccionController(IUnitOfWork unitOfWork, IMapper mapper)
     {
         this._unitOfWork = unitOfWork;
         _mapper = mapper;
@@ -32,10 +33,10 @@ public class CategoriaContactoController : BaseApiController
     [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async  Task<ActionResult<IEnumerable<CategoriaContacto>>> Get()
+    public async  Task<ActionResult<IEnumerable<DireccionDto>>> Get()
     {
-        var categoriascontactos = await _unitOfWork.CategoriaContactos.GetAllAsync();
-        return _mapper.Map<List<CategoriaContacto>>(categoriascontactos);
+        var direccion = await _unitOfWork.Direcciones.GetAllAsync();
+        return _mapper.Map<List<DireccionDto>>(direccion);
     }
     [HttpGet("Pager")]
     [Authorize]
@@ -47,13 +48,13 @@ public class CategoriaContactoController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<CategoriaContactoDto>> Get(string id)
+    public async Task<ActionResult<DireccionDto>> Get(string id)
     {
-        var categoriacontacto = await _unitOfWork.CategoriaContactos.GetByIdAsync(id);
-        if (categoriacontacto == null){
+        var direccion = await _unitOfWork.Direcciones.GetByIdAsync(id);
+        if (direccion == null){
             return NotFound();
         }
-        return _mapper.Map<CategoriaContactoDto>(categoriacontacto);
+        return _mapper.Map<DireccionDto>(direccion);
     }
     /*[HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
@@ -70,16 +71,16 @@ public class CategoriaContactoController : BaseApiController
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<CategoriaContacto>> Post(CategoriaContactoDto categoriaContactoDto){
-        var categoriacontacto = _mapper.Map<CategoriaContacto>(categoriaContactoDto);
-        this._unitOfWork.CategoriaContactos.Add(categoriacontacto);
+    public async Task<ActionResult<Direccion>> Post(DireccionDto direccionDto){
+        var direccion = _mapper.Map<Estado>(direccionDto);
+        this._unitOfWork.Estados.Add(direccion);
         await _unitOfWork.SaveAsync();
-        if (categoriacontacto == null)
+        if (direccion == null)
         {
             return BadRequest();
         }
-        categoriaContactoDto.Id_Category = categoriacontacto.Id;
-        return CreatedAtAction(nameof(Post),new {id= categoriaContactoDto.Id_Category}, categoriaContactoDto);
+        direccionDto.Id = direccion.Id;
+        return CreatedAtAction(nameof(Post),new {id= direccionDto.Id}, direccionDto);
     }
     /*[HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -97,24 +98,24 @@ public class CategoriaContactoController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<CategoriaContactoDto>> Put(int id, [FromBody]CategoriaContactoDto categoriaContactoDto){
-        if(categoriaContactoDto == null)
+    public async Task<ActionResult<DireccionDto>> Put(int id, [FromBody]DireccionDto direccionDto){
+        if(direccionDto == null)
             return NotFound();
-        var categoriaContactos = _mapper.Map<CategoriaContacto>(categoriaContactoDto);
-        _unitOfWork.CategoriaContactos.Update(categoriaContactos);
+        var direcciones = _mapper.Map<Direccion>(direccionDto);
+        _unitOfWork.Direcciones.Update(direcciones);
         await _unitOfWork.SaveAsync();
-        return categoriaContactoDto;
+        return direccionDto;
         
     }
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(string  id){
-        var categoriacontacto = await _unitOfWork.CategoriaContactos.GetByIdAsync(id);
-        if(categoriacontacto == null){
+        var direccion = await _unitOfWork.Direcciones.GetByIdAsync(id);
+        if(direccion == null){
             return NotFound();
         }
-        _unitOfWork.CategoriaContactos.Remove(categoriacontacto);
+        _unitOfWork.Direcciones.Remove(direccion);
         await _unitOfWork.SaveAsync();
         return NoContent();
     }

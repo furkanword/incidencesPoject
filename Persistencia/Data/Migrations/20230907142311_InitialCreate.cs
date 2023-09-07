@@ -21,9 +21,7 @@ namespace Persistencia.Data.Migrations
                 {
                     Id_Area = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Namearea = table.Column<string>(type: "string", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Id_desc_Incidence = table.Column<string>(type: "string", nullable: false)
+                    Namearea = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Descriptionarea = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
@@ -463,10 +461,9 @@ namespace Persistencia.Data.Migrations
                 name: "Incidence",
                 columns: table => new
                 {
-                    Id_User = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Id_Incidence = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Id_Persona = table.Column<int>(type: "int", nullable: false),
                     Id_State = table.Column<int>(type: "int", nullable: false),
                     Id_Area = table.Column<int>(type: "int", nullable: false),
                     Id_Place = table.Column<int>(type: "int", nullable: false),
@@ -479,7 +476,7 @@ namespace Persistencia.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Incidence", x => x.Id_User);
+                    table.PrimaryKey("PK_Incidence", x => x.Id_Incidence);
                     table.ForeignKey(
                         name: "FK_Incidence_Areas_Id_Area",
                         column: x => x.Id_Area,
@@ -487,8 +484,8 @@ namespace Persistencia.Data.Migrations
                         principalColumn: "Id_Area",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Incidence_Person_Id_Incidence",
-                        column: x => x.Id_Incidence,
+                        name: "FK_Incidence_Person_Id_Persona",
+                        column: x => x.Id_Persona,
                         principalTable: "Person",
                         principalColumn: "Id_User",
                         onDelete: ReferentialAction.Cascade);
@@ -582,9 +579,9 @@ namespace Persistencia.Data.Migrations
                 column: "Id_Area");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Incidence_Id_Incidence",
+                name: "IX_Incidence_Id_Persona",
                 table: "Incidence",
-                column: "Id_Incidence");
+                column: "Id_Persona");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Incidence_Id_State",
@@ -663,7 +660,7 @@ namespace Persistencia.Data.Migrations
                 table: "DetailIncidence",
                 column: "Id_DetailIncidence",
                 principalTable: "Incidence",
-                principalColumn: "Id_User",
+                principalColumn: "Id_Incidence",
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
@@ -683,7 +680,7 @@ namespace Persistencia.Data.Migrations
                 table: "Contact");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Incidence_Person_Id_Incidence",
+                name: "FK_Incidence_Person_Id_Persona",
                 table: "Incidence");
 
             migrationBuilder.DropForeignKey(

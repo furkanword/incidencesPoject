@@ -1,6 +1,6 @@
 namespace Api.Dtos;
 
-    public class PersonaxIncidencia
+    public class PersonaxIncidenciaDto
     {
         public string ? Nombre {get; set; }
         public string ? Apellido {get; set; }

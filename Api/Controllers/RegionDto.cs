@@ -1,7 +1,10 @@
 using Api.Dtos;
+using ApiIncidencias.Helpers;
 using AutoMapper;
+using Dominio;
 using Dominio.Interfaces;
 using Entities;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,12 +12,12 @@ namespace ApiIncidencias.Controllers;
 [ApiVersion("1.0")]
 [ApiVersion("1.1")]
 
-public class CategoriaContactoController : BaseApiController
+public class RegionController : BaseApiController
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public CategoriaContactoController(IUnitOfWork unitOfWork, IMapper mapper)
+    public RegionController(IUnitOfWork unitOfWork, IMapper mapper)
     {
         this._unitOfWork = unitOfWork;
         _mapper = mapper;
@@ -32,28 +35,33 @@ public class CategoriaContactoController : BaseApiController
     [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async  Task<ActionResult<IEnumerable<CategoriaContacto>>> Get()
+    public async  Task<ActionResult<IEnumerable<RegionDto>>> Get()
     {
-        var categoriascontactos = await _unitOfWork.CategoriaContactos.GetAllAsync();
-        return _mapper.Map<List<CategoriaContacto>>(categoriascontactos);
+        var region = await _unitOfWork.Regiones.GetAllAsync();
+        return _mapper.Map<List<RegionDto>>(region);
     }
     [HttpGet("Pager")]
     [Authorize]
     [MapToApiVersion("1.1")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-   
+    public async Task<ActionResult<Pager<RegionxCiudadDto>>> Get11([FromQuery] Params regionaParams)
+    {
+        var region = await _unitOfWork.Regiones.GetAllAsync(regionaParams.PageIndex,regionaParams.PageSize,regionaParams.Search);
+        var lstregionDto = _mapper.Map<List<RegionxCiudadDto>>(region.registros);
+        return new Pager<RegionxCiudadDto>(lstregionDto,region.totalRegistros,regionaParams.PageIndex,regionaParams.PageSize,regionaParams.Search);
+    }
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<CategoriaContactoDto>> Get(string id)
+    public async Task<ActionResult<RegionDto>> Get(string id)
     {
-        var categoriacontacto = await _unitOfWork.CategoriaContactos.GetByIdAsync(id);
-        if (categoriacontacto == null){
+        var region = await _unitOfWork.Regiones.GetByIdAsync(id);
+        if (region == null){
             return NotFound();
         }
-        return _mapper.Map<CategoriaContactoDto>(categoriacontacto);
+        return _mapper.Map<RegionDto>(region);
     }
     /*[HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
@@ -67,20 +75,7 @@ public class CategoriaContactoController : BaseApiController
         }
         return CreatedAtAction(nameof(Post),new {id= area.Id}, area);
     }*/
-    [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<CategoriaContacto>> Post(CategoriaContactoDto categoriaContactoDto){
-        var categoriacontacto = _mapper.Map<CategoriaContacto>(categoriaContactoDto);
-        this._unitOfWork.CategoriaContactos.Add(categoriacontacto);
-        await _unitOfWork.SaveAsync();
-        if (categoriacontacto == null)
-        {
-            return BadRequest();
-        }
-        categoriaContactoDto.Id_Category = categoriacontacto.Id;
-        return CreatedAtAction(nameof(Post),new {id= categoriaContactoDto.Id_Category}, categoriaContactoDto);
-    }
+ 
     /*[HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -97,24 +92,23 @@ public class CategoriaContactoController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<CategoriaContactoDto>> Put(int id, [FromBody]CategoriaContactoDto categoriaContactoDto){
-        if(categoriaContactoDto == null)
+    public async Task<ActionResult<RegionDto>> Put(int id, [FromBody]RegionDto regionDto){
+        if(regionDto == null)
             return NotFound();
-        var categoriaContactos = _mapper.Map<CategoriaContacto>(categoriaContactoDto);
-        _unitOfWork.CategoriaContactos.Update(categoriaContactos);
+        var regiones = _mapper.Map<Region>(regionDto);
+        _unitOfWork.Regiones.Update(regiones);
         await _unitOfWork.SaveAsync();
-        return categoriaContactoDto;
-        
+        return regionDto;   
     }
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(string  id){
-        var categoriacontacto = await _unitOfWork.CategoriaContactos.GetByIdAsync(id);
-        if(categoriacontacto == null){
+        var region = await _unitOfWork.Regiones.GetByIdAsync(id);
+        if(region == null){
             return NotFound();
         }
-        _unitOfWork.CategoriaContactos.Remove(categoriacontacto);
+        _unitOfWork.Regiones.Remove(region);
         await _unitOfWork.SaveAsync();
         return NoContent();
     }

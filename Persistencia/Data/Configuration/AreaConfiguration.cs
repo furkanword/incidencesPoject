@@ -20,7 +20,8 @@ public class AreaConfiguration : IEntityTypeConfiguration<Area>
 
             builder.Property(p => p.Name_Area)
             .HasColumnName("Namearea")
-            .HasColumnType("string")
+            .HasColumnType("varchar")
+            .HasMaxLength(200)
             .IsRequired();
 
 
@@ -31,9 +32,7 @@ public class AreaConfiguration : IEntityTypeConfiguration<Area>
             .IsRequired();
 
 
-            builder.Property(p => p.Description_Incidence)
-            .HasColumnName("Id_desc_Incidence")
-            .HasColumnType("string")
-            .IsRequired();
+
+          
     }
 }

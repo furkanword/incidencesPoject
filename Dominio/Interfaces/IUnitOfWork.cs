@@ -20,6 +20,7 @@ public interface IUnitOfWork
     IPerisfericoRepository Perisfericos {get;}
     IPersonaRepository Personas {get;}
     IRegionRepository Regiones {get;}
+    ITipoContactoRepository TipoContactos {get;}
     ITipoDocumentoRepository TipoDocumentos {get;}
     ITipoIncidenciaRepository TiposIncidencias {get;}
     IRolRepository Roles { get; }

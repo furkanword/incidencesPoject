@@ -11,7 +11,5 @@ public class Area : BaseEntity
     public string ?Name_Area { get; set; }
     public ICollection<AreaUsuario> ? AreaUsuarios { get; set; }
 
-    public string ? Description_Incidence { get; set; }
-
-    public string ?Description_Area { get; set; }
+    public string ? Description_Area { get; set; }
 }

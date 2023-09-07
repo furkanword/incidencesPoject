@@ -28,6 +28,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
         private TipoIncidenciaRepository ?_TipoIncidencia;
         private UsuarioRepository ?_Usuario;
         private PersonaRepository ? _Persona;
+    
 
 
         public UnitOfWork(ApiContext context)

@@ -281,14 +281,10 @@ namespace Persistencia.Data.Migrations
                         .HasColumnType("varchar")
                         .HasColumnName("Descriptionarea");
 
-                    b.Property<string>("Description_Incidence")
-                        .IsRequired()
-                        .HasColumnType("string")
-                        .HasColumnName("Id_desc_Incidence");
-
                     b.Property<string>("Name_Area")
                         .IsRequired()
-                        .HasColumnType("string")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar")
                         .HasColumnName("Namearea");
 
                     b.HasKey("Id");
@@ -455,7 +451,8 @@ namespace Persistencia.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("Id_User");
+                        .HasColumnName("Id_Incidence")
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("Date")
@@ -475,9 +472,7 @@ namespace Persistencia.Data.Migrations
                         .HasColumnName("Id_Area");
 
                     b.Property<int>("Id_Persona")
-                        .HasColumnType("int")
-                        .HasColumnName("Id_Incidence")
-                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<int>("Id_Place")
                         .HasColumnType("int")

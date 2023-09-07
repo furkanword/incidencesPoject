@@ -14,7 +14,7 @@ public class MappingPofiles : Profile
         CreateMap<Pais, PaisDto>().ReverseMap().ForMember(o => o.Regiones,d => d.Ignore());
         CreateMap<Region, RegionDto>().ReverseMap().ForMember(i => i.Ciudades,d => d.Ignore());
         CreateMap<Ciudad, CiudadDto>().ReverseMap();
-        CreateMap<Persona, PersonDto>().ReverseMap();
+        CreateMap<Persona, PersonaDto>().ReverseMap();
         CreateMap<Incidencia, IncidenciaDto>().ReverseMap();
         CreateMap<Area, AreaDto>().ReverseMap();
         CreateMap<AreaUsuario, AreaUsuariosDto>().ReverseMap();
@@ -31,8 +31,30 @@ public class MappingPofiles : Profile
 
         CreateMap<Area ,AreaxLugarDto>().ReverseMap();
         CreateMap<Incidencia, IncidenciaxEstado>().ReverseMap();
-        CreateMap<Persona, PersonaxIncidencia>().ReverseMap();
+        CreateMap<Persona, PersonaxIncidenciaDto>().ReverseMap();
         CreateMap<Region, RegionxCiudadDto>().ReverseMap();
         CreateMap<Pais, PaisxRegion>().ReverseMap();
       }
     }
+/* 
+SNIPPET:
+
+
+
+"Mapping-Class":{
+    "prefix": "Mapping-Class",
+    "body": [
+        "using Api.Dtos;",
+        "using AutoMapper;",
+        "using Domain.Entities;",
+        "namespace Api.Profiles;",
+        "public class Mapping${1:Entity}Profile: Profile{",
+        "   public Mapping${1:Entity}Profile(){",
+        "       CreateMap<${2:EntityDto},${1:Entity}>()",
+        "           .ReverseMap();",
+        "    }",
+        "}"
+    ],
+    "description": "this snipper will create a new basic profile class"
+}
+ */

@@ -11,6 +11,6 @@ public class Persona : BaseEntity
     public ICollection<Incidencia> ?Incidencias { get; set; }
     public string ?Name { get; set; }
     public string ?Lastname { get; set; }
-    public int Id_DocumentType { get; set; }
+    public int Id_DocumentType { get; set; } 
     public TipoDocumento ? TipoDocumento { get; set; }
 }

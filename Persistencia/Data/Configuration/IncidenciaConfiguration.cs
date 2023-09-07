@@ -11,19 +11,14 @@ public class IncidenceConfiguration : IEntityTypeConfiguration<Incidencia>
     {
         builder.ToTable("Incidence");
 
-            builder.Property(p => p.Id_Persona)
+            builder.Property(p => p.Id)
             .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
             .HasColumnName("Id_Incidence")
             .HasColumnType("int")
             .IsRequired();
 
 
-            builder.Property(p => p.Id)
-            .HasColumnName("Id_User")
-            .HasColumnType("int")
-            .IsRequired();
-
-
+        
             builder.Property(p => p.Id_State)
             .HasColumnName("Id_State")
             .HasColumnType("int")
