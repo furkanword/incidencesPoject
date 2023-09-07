@@ -1,4 +1,4 @@
-namespace ApiIncidencias.Dtos;
+namespace Api.Dtos;
 
 public class DatosUsuarioDto
 {

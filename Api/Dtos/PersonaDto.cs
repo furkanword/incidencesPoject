@@ -1,4 +1,4 @@
-namespace InsidenceAPI.Dtos;
+namespace Api.Dtos;
 
     public class PersonDto
     {

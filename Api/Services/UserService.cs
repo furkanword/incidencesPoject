@@ -1,7 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using ApiIncidencias.Dtos;
+using Api.Dtos;
 using ApiIncidencias.Helpers;
 using Aplicacion.Contratos;
 using Dominio;

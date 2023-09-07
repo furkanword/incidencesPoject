@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ApiIncidencias.Dtos;
+namespace Api.Dtos;
 
 public class LoginDto
 {

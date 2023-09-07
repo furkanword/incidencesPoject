@@ -1,6 +1,4 @@
-using Api.Dtos;
-
-namespace ApiIncidencias.Dtos;
+namespace Api.Dtos;
 public class AreaxLugarDto
 {
     public int Id { get; set; }

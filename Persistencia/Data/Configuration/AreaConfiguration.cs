@@ -33,7 +33,7 @@ public class AreaConfiguration : IEntityTypeConfiguration<Area>
 
             builder.Property(p => p.Description_Incidence)
             .HasColumnName("Id_desc_Incidence")
-            .HasColumnType("int")
+            .HasColumnType("string")
             .IsRequired();
     }
 }

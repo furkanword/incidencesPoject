@@ -1,11 +1,8 @@
-using Api.Dtos;
-using ApiIncidencias.Dtos;
-using ApiIncidencias.Helpers;
 using AutoMapper;
 using Dominio;
 using Dominio.Interfaces;
 using Entities;
-using InsidenceAPI.Dtos;
+using Api.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

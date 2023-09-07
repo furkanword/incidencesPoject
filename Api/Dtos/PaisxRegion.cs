@@ -1,6 +1,4 @@
-using Dominio;
-
-namespace InsidenceAPI.Dtos;
+namespace Api.Dtos;
 
     public class PaisxRegion
     {

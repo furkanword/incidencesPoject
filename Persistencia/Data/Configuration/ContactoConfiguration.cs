@@ -20,7 +20,7 @@ public class ContactoConfiguration : IEntityTypeConfiguration<Contacto>
                 .IsRequired();
 
 
-                builder.Property(p => p.Id_TypeCon)
+                builder.Property(p => p.Id_TypeContact)
                 .HasColumnName("Type_Contact")
                 .HasColumnType("int")
                 .IsRequired();
@@ -44,7 +44,7 @@ public class ContactoConfiguration : IEntityTypeConfiguration<Contacto>
 
                 builder.HasOne(y => y.TipoContacto)
                 .WithMany(l => l.Contactos)
-                .HasForeignKey(z => z.Id_TypeCon)
+                .HasForeignKey(z => z.Id_TypeContact)
                 .IsRequired();
 
                 builder.HasOne(y => y.CategoriaContacto)

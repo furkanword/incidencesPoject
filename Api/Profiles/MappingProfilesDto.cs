@@ -1,7 +1,6 @@
 using Dominio;
 using AutoMapper;
 using Entities;
-using InsidenceAPI.Dtos;
 using Api.Dtos;
 
 
@@ -18,10 +17,20 @@ public class MappingPofiles : Profile
         CreateMap<Persona, PersonDto>().ReverseMap();
         CreateMap<Incidencia, IncidenciaDto>().ReverseMap();
         CreateMap<Area, AreaDto>().ReverseMap();
+        CreateMap<AreaUsuario, AreaUsuariosDto>().ReverseMap();
+        CreateMap<CategoriaContacto ,CategoriaContactoDto>().ReverseMap();
+        CreateMap<Contacto , ContactoDto>().ReverseMap();
+        CreateMap<DetalleIncidencia, DetalleIncidenciaDto>().ReverseMap();
+        CreateMap<Direccion ,DireccionDto>().ReverseMap();
+        CreateMap<Estado , EstadoDto>().ReverseMap();
+        CreateMap<Incidencia , IncidenciaDto> ().ReverseMap();
+        CreateMap<Lugar , LugarDto>().ReverseMap();
+        CreateMap<NivelIncidencia, NivelIncidenciaDto>().ReverseMap();
+        CreateMap<Perisferico , PerisfericoDto>().ReverseMap();
         
 
-
-
+        CreateMap<Area ,AreaxLugarDto>().ReverseMap();
+        CreateMap<Incidencia, IncidenciaxEstado>().ReverseMap();
         CreateMap<Persona, PersonaxIncidencia>().ReverseMap();
         CreateMap<Region, RegionxCiudadDto>().ReverseMap();
         CreateMap<Pais, PaisxRegion>().ReverseMap();

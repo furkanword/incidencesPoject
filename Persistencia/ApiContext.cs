@@ -33,6 +33,7 @@ namespace Persistencia
         public DbSet<Region> ? Regiones { get; set; }
         public DbSet<Pais> ? Paises { get; set; }
         public DbSet<TipoContacto> TipoContactos {get; set;}
+      
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Usuario>().HasIndex(idx => idx.Username).IsUnique();

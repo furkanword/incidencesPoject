@@ -1,4 +1,4 @@
-using ApiIncidencias.Dtos;
+using Api.Dtos;
 
 namespace ApiIncidencias.Services;
 
