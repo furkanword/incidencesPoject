@@ -48,7 +48,7 @@ public class LugarController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<EstadoDto>> Get(string id)
+    public async Task<ActionResult<EstadoDto>> Get(int id)
     {
         var lugar = await _unitOfWork.Lugares.GetByIdAsync(id);
         if (lugar == null){
@@ -110,7 +110,7 @@ public class LugarController : BaseApiController
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Delete(string  id){
+    public async Task<IActionResult> Delete(int  id){
         var lugar = await _unitOfWork.Lugares.GetByIdAsync(id);
         if(lugar == null){
             return NotFound();

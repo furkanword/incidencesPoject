@@ -55,7 +55,7 @@ public class PaisController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<PaisDto>> Get(string id)
+    public async Task<ActionResult<PaisDto>> Get(int id)
     {
         var pais = await _unitOfWork.Paises.GetByIdAsync(id);
         if (pais == null){
@@ -86,7 +86,7 @@ public class PaisController : BaseApiController
         {
             return BadRequest();
         }
-        paisDto.Id = paises.ToString();
+        paisDto.Id = paises.Id.ToString();
         return CreatedAtAction(nameof(Post),new {id= paisDto.Id}, paisDto);
     }
     /*[HttpPut("{id}")]
@@ -117,7 +117,7 @@ public class PaisController : BaseApiController
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Delete(string  id){
+    public async Task<IActionResult> Delete(int  id){
         var pais = await _unitOfWork.Paises.GetByIdAsync(id);
         if(pais == null){
             return NotFound();

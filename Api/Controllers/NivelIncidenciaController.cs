@@ -48,7 +48,7 @@ public class NivelIncidenciaController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<NivelIncidenciaDto>> Get(string id)
+    public async Task<ActionResult<NivelIncidenciaDto>> Get(int id)
     {
         var nivelincidencia = await _unitOfWork.NivelIncidencias.GetByIdAsync(id);
         if (nivelincidencia == null){
@@ -110,7 +110,7 @@ public class NivelIncidenciaController : BaseApiController
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Delete(string  id){
+    public async Task<IActionResult> Delete(int  id){
         var nivelincidencia = await _unitOfWork.NivelIncidencias.GetByIdAsync(id);
         if(nivelincidencia == null){
             return NotFound();

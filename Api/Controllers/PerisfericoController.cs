@@ -50,7 +50,7 @@ public class PerisfericoController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<PerisfericoDto>> Get(string id)
+    public async Task<ActionResult<PerisfericoDto>> Get(int id)
     {
         var perisferico = await _unitOfWork.Perisfericos.GetByIdAsync(id);
         if (perisferico == null){
@@ -112,7 +112,7 @@ public class PerisfericoController : BaseApiController
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Delete(string  id){
+    public async Task<IActionResult> Delete(int  id){
         var perisferico = await _unitOfWork.Perisfericos.GetByIdAsync(id);
         if(perisferico == null){
             return NotFound();

@@ -38,22 +38,23 @@ public class AreaController : BaseApiController
         var areas = await _unitOfWork.Areas.GetAllAsync();
         return _mapper.Map<List<AreaDto>>(areas);
     }
-    [HttpGet("Pager")]
+    
+    
     [Authorize]
     [MapToApiVersion("1.1")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Pager<AreaxLugarDto>>> Get11([FromQuery] Params areaParams)
+    public async Task<ActionResult<Pager<AreaDto>>> Get11([FromQuery] Params areaParams)
     {
-        var area = await _unitOfWork.Areas.GetAllAsync(areaParams.PageIndex,areaParams.PageSize,areaParams.Search);
-        var lstAreasDto = _mapper.Map<List<AreaxLugarDto>>(area.registros);
-        return new Pager<AreaxLugarDto>(lstAreasDto,area.totalRegistros,areaParams.PageIndex,areaParams.PageSize,areaParams.Search);
+        var (totalRegistros, registros) = await _unitOfWork.Areas.GetAllAsync(areaParams.PageIndex,areaParams.PageSize,areaParams.Search);
+        var lstAreasDto = _mapper.Map<List<AreaDto>>(registros);
+        return new Pager<AreaDto>(lstAreasDto,totalRegistros,areaParams.PageIndex,areaParams.PageSize,areaParams.Search);
     }
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<AreaDto>> Get(string id)
+    public async Task<ActionResult<AreaDto>> Get(int id)
     {
         var area = await _unitOfWork.Areas.GetByIdAsync(id);
         if (area == null){
@@ -114,7 +115,7 @@ public class AreaController : BaseApiController
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Delete(string  id){
+    public async Task<IActionResult> Delete(int  id){
         var area = await _unitOfWork.Areas.GetByIdAsync(id);
         if(area == null){
             return NotFound();

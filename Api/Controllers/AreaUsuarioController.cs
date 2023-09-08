@@ -47,7 +47,7 @@ public class AreaUsuarioController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<AreaUsuariosDto>> Get(string id)
+    public async Task<ActionResult<AreaUsuariosDto>> Get(int id)
     {
         var areausuario = await _unitOfWork.AreaUsuarios.GetByIdAsync(id);
         if (areausuario == null){
@@ -109,7 +109,7 @@ public class AreaUsuarioController : BaseApiController
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Delete(string  id){
+    public async Task<IActionResult> Delete(int  id){
         var areausuario = await _unitOfWork.AreaUsuarios.GetByIdAsync(id);
         if(areausuario == null){
             return NotFound();

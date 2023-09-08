@@ -55,7 +55,7 @@ public class RegionController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<RegionDto>> Get(string id)
+    public async Task<ActionResult<RegionDto>> Get(int id)
     {
         var region = await _unitOfWork.Regiones.GetByIdAsync(id);
         if (region == null){
@@ -103,7 +103,7 @@ public class RegionController : BaseApiController
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Delete(string  id){
+    public async Task<IActionResult> Delete(int  id){
         var region = await _unitOfWork.Regiones.GetByIdAsync(id);
         if(region == null){
             return NotFound();

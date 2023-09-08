@@ -48,7 +48,7 @@ public class DireccionController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<DireccionDto>> Get(string id)
+    public async Task<ActionResult<DireccionDto>> Get(int id)
     {
         var direccion = await _unitOfWork.Direcciones.GetByIdAsync(id);
         if (direccion == null){
@@ -110,7 +110,7 @@ public class DireccionController : BaseApiController
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Delete(string  id){
+    public async Task<IActionResult> Delete(int  id){
         var direccion = await _unitOfWork.Direcciones.GetByIdAsync(id);
         if(direccion == null){
             return NotFound();

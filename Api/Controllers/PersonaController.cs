@@ -55,7 +55,7 @@ public class PersonaController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<PaisDto>> Get(string id)
+    public async Task<ActionResult<PaisDto>> Get(int id)
     {
         var persona = await _unitOfWork.Personas.GetByIdAsync(id);
         if (persona == null){
@@ -117,7 +117,7 @@ public class PersonaController : BaseApiController
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Delete(string  id){
+    public async Task<IActionResult> Delete(int  id){
         var persona = await _unitOfWork.Personas.GetByIdAsync(id);
         if(persona == null){
             return NotFound();

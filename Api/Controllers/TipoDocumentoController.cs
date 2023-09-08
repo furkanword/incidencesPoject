@@ -49,7 +49,7 @@ public class TipoDocumentoCotroller : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<TipoDocumentoDto>> Get(string id)
+    public async Task<ActionResult<TipoDocumentoDto>> Get(int id)
     {
         var tipodocumento = await _unitOfWork.TipoDocumentos.GetByIdAsync(id);
         if (tipodocumento == null){
@@ -110,7 +110,7 @@ public class TipoDocumentoCotroller : BaseApiController
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Delete(string  id){
+    public async Task<IActionResult> Delete(int  id){
         var tipocontacto = await _unitOfWork.TipoContactos.GetByIdAsync(id);
         if(tipocontacto == null){
             return NotFound();

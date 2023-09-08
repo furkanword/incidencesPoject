@@ -49,7 +49,7 @@ public class UsuarioController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<UsuarioDto>> Get(string id)
+    public async Task<ActionResult<UsuarioDto>> Get(int id)
     {
         var usuario = await _unitOfWork.Usuarios.GetByIdAsync(id);
         if (usuario == null){
@@ -111,7 +111,7 @@ public class UsuarioController : BaseApiController
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Delete(string  id){
+    public async Task<IActionResult> Delete(int  id){
         var usuario = await _unitOfWork.Usuarios.GetByIdAsync(id);
         if(usuario == null){
             return NotFound();
