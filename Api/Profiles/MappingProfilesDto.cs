@@ -27,6 +27,7 @@ public class MappingPofiles : Profile
         CreateMap<Lugar , LugarDto>().ReverseMap();
         CreateMap<NivelIncidencia, NivelIncidenciaDto>().ReverseMap();
         CreateMap<Perisferico , PerisfericoDto>().ReverseMap();
+        CreateMap<RolDto , Rol>().ReverseMap();
         
 
         CreateMap<Area ,AreaxLugarDto>().ReverseMap();

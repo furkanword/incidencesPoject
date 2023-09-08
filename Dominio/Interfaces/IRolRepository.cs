@@ -8,6 +8,6 @@ namespace Dominio.Interfaces
 {
     public interface IRolRepository : IGenericRepository<Rol> 
     {
-        
+        Task<Rol> GetRolByName(string Name);
     }
 }

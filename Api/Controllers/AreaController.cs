@@ -29,7 +29,7 @@ public class AreaController : BaseApiController
         return Ok(regiones);
     }*/
     [HttpGet]
-    [Authorize(Roles = "Administrador")]
+    [Authorize]
     [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -84,8 +84,7 @@ public class AreaController : BaseApiController
         {
             return BadRequest();
         }
-        areaDto.Id = area.Id;
-        return CreatedAtAction(nameof(Post),new {id= areaDto.Id}, areaDto);
+        return CreatedAtAction(nameof(Post),new {id= area.Id}, areaDto);
     }
     /*[HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]

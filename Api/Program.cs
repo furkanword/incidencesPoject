@@ -21,7 +21,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.ConfigureRatelimiting();
 builder.Services.ConfigureApiVersioning();
 
-var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context"));
+var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("6bz%;MVYYM`6tk2/X3jjC}%CRT#QUUt^Qv$OI<=M?3)wWX+T%-9B'xrt(url%s]Yg@Y9LTsCr}g|e@:>{iSCte}Uwye`"));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>{
     opt.TokenValidationParameters = new TokenValidationParameters{
         ValidateIssuerSigningKey = true,

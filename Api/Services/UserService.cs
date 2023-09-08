@@ -6,6 +6,7 @@ using ApiIncidencias.Helpers;
 using Aplicacion.Contratos;
 using Dominio;
 using Dominio.Interfaces;
+using iText.Forms.Xfdf;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -44,18 +45,26 @@ namespace ApiIncidencias.Services
             usuario.Password = _passwordHasher.HashPassword(usuario, registerDto.Password!);
 
             // Se verifica si ya existe un usuario con el mismo nombre de usuario.
-            var usuarioExiste = _unitOfWork.Usuarios
+            Usuario? usuarioExiste = null;
+            try
+            {
+                usuarioExiste = _unitOfWork.Usuarios
                 .Find(u => u.Username!.ToLower() == registerDto.Username!.ToLower())
                 .FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
             if (usuarioExiste == null)
             {
                 // Si el usuario no existe, se le asigna un rol predeterminado y se guarda en la base de datos.
-                var rolPredeterminado = _unitOfWork.Roles
-                    .Find(u => u.Name_Rol == Autorizacion.rol_predeterminado.ToString())
-                    .First();
                 try
                 {
+                    var rolPredeterminado = _unitOfWork.Roles
+                        .Find(u => u.Name_Rol == Autorizacion.rol_predeterminado.ToString())
+                        .First();
                     usuario.Rol.Add(rolPredeterminado);
                     _unitOfWork.Usuarios.Add(usuario);
                     await _unitOfWork.SaveAsync();
@@ -77,7 +86,7 @@ namespace ApiIncidencias.Services
         // Método para autenticar y generar un token JWT para un usuario.
         public async Task<DatosUsuarioDto> GetTokenAsync(LoginDto model)
         {
-            DatosUsuarioDto datosUsuarioDto = new DatosUsuarioDto();
+            DatosUsuarioDto datosUsuarioDto = new();
             
             // Se busca al usuario por su nombre de usuario en la base de datos.
             var usuario = await _unitOfWork.Usuarios.GetByUsernameAsync(model.Username!);
@@ -97,8 +106,8 @@ namespace ApiIncidencias.Services
             {
                 // Si la contraseña es correcta, se genera un token JWT y se devuelve información del usuario.
                 datosUsuarioDto.EstaAutenticado = true;
-                JwtSecurityToken jwtSecurityToken = CreateJwtToken(usuario);
-                datosUsuarioDto.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+                //JwtSecurityToken jwtSecurityToken = CreateJwtToken(usuario);
+                datosUsuarioDto.Token = _jwtGenerador.CrearToken(usuario);//new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
                 datosUsuarioDto.Email = usuario.Email;
                 datosUsuarioDto.UserName = usuario.Username;
                 datosUsuarioDto.Roles = usuario.Rol.Select(u => u.Name_Rol).ToList()!;
@@ -146,11 +155,40 @@ namespace ApiIncidencias.Services
             return jwtSecurityToken;
         }
 
-        public Task<string> AddRoleAsync(AddRoleDto model)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<string> AddRoleAsync(AddRolDto model){
+            Usuario ? usuario = await _unitOfWork.Usuarios.GetByUsernameAsync(model.Username!);        
+            if (usuario == null){
+                return $"No existe algún usuario registrado con la cuenta {model.Username}.";            
+            }else if(_passwordHasher.VerifyHashedPassword(usuario, usuario.Password!, model.Password!) != PasswordVerificationResult.Success ){
+                return $"Credenciales incorrectas para el usuario {model.Username}.";
+            }
+            var existingRol = await _unitOfWork.Roles.GetRolByName(model.Role!);
+            if (existingRol == null){
+                return $"Rol {model.Role} agregado a la cuenta {model.Username} de forma exitosa.";
+            }
+            var userHasRol = usuario.Rol?.Any(x => x.Id == existingRol.Id);
+            if (userHasRol == false)
+            {            
+                usuario.Rol?.Add(existingRol);            ;
 
+                _unitOfWork.Usuarios.Update(usuario);
+                await _unitOfWork.SaveAsync();
+            }
+            return $"Rol {model.Role} agregado a la cuenta {model.Username} de forma exitosa.";
+            
+        
+        }
         // Otros métodos como UserLogin y AddRoleAsync no están implementados aquí.
+        public async Task<LoginDto> UserLogin(LoginDto model)
+    {
+        var usuario = await _unitOfWork.Usuarios.GetByUsernameAsync(model.Username);
+        var resultado = _passwordHasher.VerifyHashedPassword(usuario, usuario.Password, model.Password);
+
+        if (resultado == PasswordVerificationResult.Success)
+        {
+            return model;
+        }
+        return null;
+    }
     }
 }

@@ -32,7 +32,7 @@ namespace Persistencia
         public DbSet<Ciudad> ? Ciudades { get; set; }
         public DbSet<Region> ? Regiones { get; set; }
         public DbSet<Pais> ? Paises { get; set; }
-        public DbSet<TipoContacto> TipoContactos {get; set;}
+        public DbSet<TipoContacto>? TipoContactos {get; set;}
       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

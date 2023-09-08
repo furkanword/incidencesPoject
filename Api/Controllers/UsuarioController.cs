@@ -5,6 +5,7 @@ using Entities;
 using Api.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ApiIncidencias.Services;
 
 namespace ApiIncidencias.Controllers;
 [ApiVersion("1.0")]
@@ -48,13 +49,13 @@ public class UsuarioController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<EstadoDto>> Get(string id)
+    public async Task<ActionResult<UsuarioDto>> Get(string id)
     {
         var usuario = await _unitOfWork.Usuarios.GetByIdAsync(id);
         if (usuario == null){
             return NotFound();
         }
-        return _mapper.Map<EstadoDto>(usuario);
+        return _mapper.Map<UsuarioDto>(usuario);
     }
     /*[HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
@@ -72,8 +73,8 @@ public class UsuarioController : BaseApiController
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<Usuario>> Post(UsuarioDto usuarioDto){
-        var usuario = _mapper.Map<Lugar>(usuarioDto);
-        this._unitOfWork.Lugares.Add(usuario);
+        var usuario = _mapper.Map<Usuario>(usuarioDto);
+        this._unitOfWork.Usuarios.Add(usuario);
         await _unitOfWork.SaveAsync();
         if (usuario == null)
         {
@@ -119,4 +120,7 @@ public class UsuarioController : BaseApiController
         await _unitOfWork.SaveAsync();
         return NoContent();
     }
+
+
+ 
 } 

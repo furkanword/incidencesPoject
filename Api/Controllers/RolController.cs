@@ -17,7 +17,7 @@ public class RolController : BaseApiController
 
     public RolController(IUnitOfWork unitOfWork, IMapper mapper)
     {
-        this._unitOfWork = unitOfWork;
+        _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
    /* [HttpGet]
@@ -29,7 +29,7 @@ public class RolController : BaseApiController
         return Ok(regiones);
     }*/
     [HttpGet]
-    [Authorize(Roles = "Administrador")]
+    //[Authorize(Roles = "Administrador")]
     [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -38,16 +38,11 @@ public class RolController : BaseApiController
         var rol = await _unitOfWork.Roles.GetAllAsync();
         return _mapper.Map<List<RolDto>>(rol);
     }
-    [HttpGet("Pager")]
-    [Authorize]
+    [HttpGet("{id}")]
+    //[Authorize]
     [MapToApiVersion("1.1")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-   
-    [HttpGet("{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<RolDto>> Get(string id)
     {
         var rol = await _unitOfWork.Roles.GetByIdAsync(id);
@@ -69,18 +64,18 @@ public class RolController : BaseApiController
         return CreatedAtAction(nameof(Post),new {id= area.Id}, area);
     }*/
     [HttpPost]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Rol>> Post(RolDto rolDto){
-        var rol = _mapper.Map<Lugar>(rolDto);
-        this._unitOfWork.Lugares.Add(rol);
+    public async Task<ActionResult<Rol>> Post(RolDto rolDto){        
+        var rol = _mapper.Map<Rol>(rolDto);
+        _unitOfWork.Roles.Add(rol);
         await _unitOfWork.SaveAsync();
         if (rol == null)
         {
             return BadRequest();
         }
-        rolDto.Id = rol.Id;
-        return CreatedAtAction(nameof(Post),new {id= rolDto.Id}, rolDto);
+        return CreatedAtAction(nameof(Post),new {id= rol.Id}, rolDto);
     }
     /*[HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -95,6 +90,7 @@ public class RolController : BaseApiController
         
     }*/
     [HttpPut("{id}")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -107,6 +103,7 @@ public class RolController : BaseApiController
         return rolDto;
     }
     [HttpDelete("{id}")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(string  id){

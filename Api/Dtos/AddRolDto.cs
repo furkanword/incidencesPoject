@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Api.Dtos;
 
-public class AddRoleDto
+public class AddRolDto
 {
     [Required]
     public string ? Username { get; set; }

@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 namespace Api.Dtos
 {
     public class AreaDto
-    {
-        public int Id {get; set;}
+    {           
         public string ?Name_Area { get; set; }
         public string ? Description_Incidence { get; set; }
         public string ?Description_Area { get; set; }

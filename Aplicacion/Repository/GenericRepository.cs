@@ -9,7 +9,7 @@ namespace Aplicacion.Repository;
 
 public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
 {
-    private readonly ApiContext _context;
+    protected readonly ApiContext _context;
 
     public GenericRepository(ApiContext context)
     {
