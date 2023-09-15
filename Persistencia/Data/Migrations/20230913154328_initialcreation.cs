@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Persistencia.Data.Migrations
+namespace Persistencia.Data.migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initialcreation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

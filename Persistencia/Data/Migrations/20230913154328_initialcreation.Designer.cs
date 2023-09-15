@@ -9,11 +9,11 @@ using Persistencia;
 
 #nullable disable
 
-namespace Persistencia.Data.Migrations
+namespace Persistencia.Data.migrations
 {
     [DbContext(typeof(ApiContext))]
-    [Migration("20230907142311_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230913154328_initialcreation")]
+    partial class initialcreation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -252,7 +252,7 @@ namespace Persistencia.Data.Migrations
                     b.ToTable("User", (string)null);
                 });
 
-            modelBuilder.Entity("Dominio.UsuarioRoles", b =>
+            modelBuilder.Entity("Dominio.UsuarioRol", b =>
                 {
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -707,7 +707,7 @@ namespace Persistencia.Data.Migrations
                     b.Navigation("Pais");
                 });
 
-            modelBuilder.Entity("Dominio.UsuarioRoles", b =>
+            modelBuilder.Entity("Dominio.UsuarioRol", b =>
                 {
                     b.HasOne("Entities.Rol", "Rol")
                         .WithMany("UsuarioRoles")
@@ -716,7 +716,7 @@ namespace Persistencia.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Dominio.Usuario", "Usuario")
-                        .WithMany("UsuariosRoles")
+                        .WithMany("UsuariosRol")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -922,7 +922,7 @@ namespace Persistencia.Data.Migrations
 
             modelBuilder.Entity("Dominio.Usuario", b =>
                 {
-                    b.Navigation("UsuariosRoles");
+                    b.Navigation("UsuariosRol");
                 });
 
             modelBuilder.Entity("Entities.Area", b =>

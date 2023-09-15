@@ -14,7 +14,7 @@ namespace Persistencia
         }
         public DbSet<Usuario> ? Usuarios { get; set; }
         public DbSet<Rol> ? Roles { get; set;}
-        public DbSet<UsuarioRoles> ? UsuariosRoles { get; set; }   
+        public DbSet<UsuarioRol> ? UsuariosRoles { get; set; }   
         public DbSet<Persona> ? Personas {get; set;}
         public DbSet<TipoIncidencia> ? TipoIncidencias {get; set;}
         public DbSet<Estado> ? Estados {get; set;}

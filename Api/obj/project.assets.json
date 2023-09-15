@@ -6098,11 +6098,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Api\\Api.csproj",
+      "projectUniqueName": "C:\\Users\\arcek\\Music\\incidencesPoject\\Api\\Api.csproj",
       "projectName": "Api",
-      "projectPath": "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Api\\Api.csproj",
+      "projectPath": "C:\\Users\\arcek\\Music\\incidencesPoject\\Api\\Api.csproj",
       "packagesPath": "C:\\Users\\arcek\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Api\\obj\\",
+      "outputPath": "C:\\Users\\arcek\\Music\\incidencesPoject\\Api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\arcek\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -6117,11 +6117,11 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Aplicacion\\Aplicacion.csproj": {
-              "projectPath": "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Aplicacion\\Aplicacion.csproj"
+            "C:\\Users\\arcek\\Music\\incidencesPoject\\Aplicacion\\Aplicacion.csproj": {
+              "projectPath": "C:\\Users\\arcek\\Music\\incidencesPoject\\Aplicacion\\Aplicacion.csproj"
             },
-            "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Seguridad\\Seguridad.csproj": {
-              "projectPath": "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Seguridad\\Seguridad.csproj"
+            "C:\\Users\\arcek\\Music\\incidencesPoject\\Seguridad\\Seguridad.csproj": {
+              "projectPath": "C:\\Users\\arcek\\Music\\incidencesPoject\\Seguridad\\Seguridad.csproj"
             }
           }
         }

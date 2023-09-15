@@ -3,7 +3,7 @@ using Entities;
 
 namespace Dominio;
 
-public class UsuarioRoles : BaseEntity
+public class UsuarioRol : BaseEntity
 {
     public int UserId {get;set;}
     public Usuario ? Usuario { get; set; }

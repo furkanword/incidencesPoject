@@ -1,12 +1,14 @@
+using System.Collections.Concurrent;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using Api.Dtos;
 using ApiIncidencias.Helpers;
 using Aplicacion.Contratos;
 using Dominio;
 using Dominio.Interfaces;
-using iText.Forms.Xfdf;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -65,7 +67,7 @@ namespace ApiIncidencias.Services
                     var rolPredeterminado = _unitOfWork.Roles
                         .Find(u => u.Name_Rol == Autorizacion.rol_predeterminado.ToString())
                         .First();
-                    usuario.Rol.Add(rolPredeterminado);
+                    usuario.Roles.Add(rolPredeterminado);
                     _unitOfWork.Usuarios.Add(usuario);
                     await _unitOfWork.SaveAsync();
 
@@ -105,12 +107,21 @@ namespace ApiIncidencias.Services
             if (resultado == PasswordVerificationResult.Success)
             {
                 // Si la contraseña es correcta, se genera un token JWT y se devuelve información del usuario.
+                datosUsuarioDto.Mensaje = "OK";
                 datosUsuarioDto.EstaAutenticado = true;
-                //JwtSecurityToken jwtSecurityToken = CreateJwtToken(usuario);
-                datosUsuarioDto.Token = _jwtGenerador.CrearToken(usuario);//new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+                JwtSecurityToken jwtSecurityToken = CreateJwtToken(usuario);
+                //datosUsuarioDto.AccessToken = _jwtGenerador.CrearToken(usuario);//new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+                datosUsuarioDto.AccessToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
                 datosUsuarioDto.Email = usuario.Email;
                 datosUsuarioDto.UserName = usuario.Username;
-                datosUsuarioDto.Roles = usuario.Rol.Select(u => u.Name_Rol).ToList()!;
+                datosUsuarioDto.Roles = usuario.Roles.Select(u => u.Name_Rol).ToList()!;
+                datosUsuarioDto.Expiry = DateTime.UtcNow.AddMinutes(_jwt.DurationInMinutes);
+            
+                //Fomar 2 de obtener el refreshToken
+                datosUsuarioDto.RefreshToken = GenerateRefreshToken(usuario.Username).ToString("D");
+            
+            //Fomar 1 de obtener el refreshToken
+            //datosUsuarioDto.RefreshToken = RandomRefreshTokenString();
                 return datosUsuarioDto;
             }
             
@@ -121,40 +132,6 @@ namespace ApiIncidencias.Services
         }
 
         // Método privado para crear un token JWT.
-        private JwtSecurityToken CreateJwtToken(Usuario usuario)
-        {
-            var roles = usuario.Rol;
-            var roleClaims = new List<Claim>();
-            foreach (var role in roles)
-            {
-                roleClaims.Add(new Claim("rol", role.Name_Rol!));
-            }
-            
-            // Se definen las reclamaciones del token, como el nombre de usuario, correo electrónico, etc.
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, usuario.Username!),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, usuario.Email!),
-                new Claim("uid", usuario.Id.ToString())
-            }
-            .Union(roleClaims);
-            
-            // Se crea una clave de seguridad basada en la clave secreta definida en la configuración.
-            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwt.Key!));
-            var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256Signature);
-            
-            // Se crea y devuelve el token JWT.
-            var jwtSecurityToken = new JwtSecurityToken(
-                issuer: _jwt.Issuer,
-                audience: _jwt.Audience,
-                claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(_jwt.DurationInMinutes),
-                signingCredentials: signingCredentials);
-            
-            return jwtSecurityToken;
-        }
-
         public async Task<string> AddRoleAsync(AddRolDto model){
             Usuario ? usuario = await _unitOfWork.Usuarios.GetByUsernameAsync(model.Username!);        
             if (usuario == null){
@@ -166,10 +143,10 @@ namespace ApiIncidencias.Services
             if (existingRol == null){
                 return $"Rol {model.Role} agregado a la cuenta {model.Username} de forma exitosa.";
             }
-            var userHasRol = usuario.Rol?.Any(x => x.Id == existingRol.Id);
+            var userHasRol = usuario.Roles?.Any(x => x.Id == existingRol.Id);
             if (userHasRol == false)
             {            
-                usuario.Rol?.Add(existingRol);            ;
+                usuario.Roles?.Add(existingRol);            ;
 
                 _unitOfWork.Usuarios.Update(usuario);
                 await _unitOfWork.SaveAsync();
@@ -180,15 +157,154 @@ namespace ApiIncidencias.Services
         }
         // Otros métodos como UserLogin y AddRoleAsync no están implementados aquí.
         public async Task<LoginDto> UserLogin(LoginDto model)
-    {
-        var usuario = await _unitOfWork.Usuarios.GetByUsernameAsync(model.Username);
-        var resultado = _passwordHasher.VerifyHashedPassword(usuario, usuario.Password, model.Password);
-
-        if (resultado == PasswordVerificationResult.Success)
         {
-            return model;
+            var usuario = await _unitOfWork.Usuarios.GetByUsernameAsync(model.Username!);
+            var resultado = _passwordHasher.VerifyHashedPassword(usuario, usuario.Password!, model.Password!);
+
+            if (resultado == PasswordVerificationResult.Success)
+            {
+                return model;
+            }
+            return null!;
         }
-        return null;
-    }
+        
+         public async Task<DatosUsuarioDto> GetTokenAsync(AuthenticationTokenResultDto model)
+        {
+            if (!IsValid(model, out string Username))
+            {
+                return null!;
+            }
+
+            DatosUsuarioDto datosUsuarioDto = new DatosUsuarioDto();
+            var usuario = await _unitOfWork.Usuarios
+                                                    .GetByUsernameAsync(Username);
+
+            if (usuario == null)
+            {
+                datosUsuarioDto.EstaAutenticado = false;
+                datosUsuarioDto.Mensaje = $"No existe ningun usuario con el username {Username}.";
+                return datosUsuarioDto;
+            }
+
+            datosUsuarioDto.Mensaje = "OK";
+            datosUsuarioDto.EstaAutenticado = true;
+            JwtSecurityToken jwtSecurityToken = CreateJwtToken(usuario);
+            datosUsuarioDto.AccessToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+            datosUsuarioDto.UserName = usuario.Username;
+            datosUsuarioDto.Email = usuario.Email;
+            //datosUsuarioDto.Token = _jwtGenerador.CrearToken(usuario);
+            datosUsuarioDto.Roles = usuario.Roles
+                                                .Select(p => p.Name_Rol!)
+                                                .ToList();
+
+            datosUsuarioDto.Expiry = DateTime.UtcNow.AddMinutes(_jwt.DurationInMinutes);
+            
+            //Fomar 2 de obtener el refreshToken
+            datosUsuarioDto.RefreshToken = GenerateRefreshToken(usuario.Username).ToString("D");
+            
+            //Fomar 1 de obtener el refreshToken
+            //datosUsuarioDto.RefreshToken = RandomRefreshTokenString();
+
+            return datosUsuarioDto; 
+        }
+
+        private bool IsValid(AuthenticationTokenResultDto authResult, out string Username)
+        {
+            Username = string.Empty;
+
+            ClaimsPrincipal principal = GetPrincipalFromExpiredToken(authResult.AccessToken);
+
+            if (principal is null)
+            {
+                throw new UnauthorizedAccessException("No hay token de Acceso");
+            }
+
+            Username = principal.FindFirstValue(ClaimTypes.NameIdentifier)!;
+
+            if (string.IsNullOrEmpty(Username))
+            {
+                throw new UnauthorizedAccessException("En UserName es nulo o esta vacio");
+            }
+
+            if (!Guid.TryParse(authResult.RefreshToken, out Guid givenRefreshToken))
+            {
+                throw new UnauthorizedAccessException("El Refresh Token esta mal formado");
+            }
+
+            if (!_refreshToken.TryGetValue(Username, out Guid currentRefreshToken))
+            {
+                throw new UnauthorizedAccessException("El Refresh Token no es valido en el sistema");
+            }
+
+            //se compara que los RefreshToquen sean identicos
+            if (currentRefreshToken != givenRefreshToken)
+            {
+                throw new UnauthorizedAccessException("El Refresh Token enviado es Invalido");
+            }
+
+            return true;
+        }
+        private ClaimsPrincipal GetPrincipalFromExpiredToken(string? accessToken)
+        {
+            TokenValidationParameters tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = false,
+                ValidIssuer = _jwt.Issuer,
+                ValidAudience = _jwt.Audience,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwt.Key!))
+            };
+
+            //se valida en Token
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            ClaimsPrincipal principal = tokenHandler.ValidateToken(accessToken, tokenValidationParameters, out SecurityToken securityToken);
+
+            if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256Signature, StringComparison.InvariantCulture))
+            {
+                throw new UnauthorizedAccessException("El token es Invalido");
+            }
+
+            return principal;
+        }
+
+        private JwtSecurityToken CreateJwtToken(Usuario usuario)
+        {
+            var roles = usuario.Roles;
+            var roleClaims = new List<Claim>();
+            foreach (var role in roles)
+            {
+                roleClaims.Add(new Claim("roles", role.Name_Rol!));
+            }
+            var claims = new[]
+            {
+                    new Claim(JwtRegisteredClaimNames.Sub, usuario.Username!),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim("uid", usuario.Id.ToString())
+            }
+            .Union(roleClaims);
+            
+            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwt.Key));
+            Console.WriteLine("", symmetricSecurityKey);
+
+            var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256Signature);
+            var JwtSecurityToken = new JwtSecurityToken(
+                issuer : _jwt.Issuer,
+                audience : _jwt.Audience,
+                claims : claims,
+                expires : DateTime.UtcNow.AddMinutes(_jwt.DurationInMinutes),
+                signingCredentials : signingCredentials);
+
+            return JwtSecurityToken;
+        }
+
+        //Forma 1 para generar el RefreshToken (para cualquier usuario)-----------------------------
+         private static readonly ConcurrentDictionary<string, Guid> _refreshToken = new ConcurrentDictionary<string, Guid>();
+        private Guid GenerateRefreshToken(string username)
+        {
+            Guid newRefreshToken = _refreshToken.AddOrUpdate(username, u => Guid.NewGuid(), (u, o) => Guid.NewGuid());
+            return newRefreshToken;
+        }
     }
 }

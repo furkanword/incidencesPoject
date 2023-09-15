@@ -62,18 +62,6 @@ public class CiudadController : BaseApiController
         }
         return _mapper.Map<CiudadDto>(ciudad);
     }
-    /*[HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Area>> Post(Area area){
-        this._unitOfWork.Areas.Add(area);
-        await _unitOfWork.SaveAsync();
-        if (area == null)
-        {
-            return BadRequest();
-        }
-        return CreatedAtAction(nameof(Post),new {id= area.Id}, area);
-    }*/
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -88,18 +76,6 @@ public class CiudadController : BaseApiController
         ciudadDto.Id = ciudad.Id.ToString();
         return CreatedAtAction(nameof(Post),new {id= ciudadDto.Id}, ciudadDto);
     }
-    /*[HttpPut("{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Area>> Put(int id, [FromBody]Area area){
-        if(area == null)
-            return NotFound();
-        _unitOfWork.Areas.Update(area);
-        await _unitOfWork.SaveAsync();
-        return area;
-        
-    }*/
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -107,8 +83,8 @@ public class CiudadController : BaseApiController
     public async Task<ActionResult<CiudadDto>> Put(int id, [FromBody]CiudadDto ciudadDto){
         if(ciudadDto == null)
             return NotFound();
-        var ciudades = _mapper.Map<Area>(ciudadDto);
-        _unitOfWork.Areas.Update(ciudades);
+        var ciudades = _mapper.Map<Ciudad>(ciudadDto);
+        _unitOfWork.Ciudades.Update(ciudades);
         await _unitOfWork.SaveAsync();
         return ciudadDto;
         

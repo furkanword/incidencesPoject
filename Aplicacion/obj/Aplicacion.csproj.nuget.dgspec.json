@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Aplicacion\\Aplicacion.csproj": {}
+    "C:\\Users\\arcek\\Music\\incidencesPoject\\Aplicacion\\Aplicacion.csproj": {}
   },
   "projects": {
-    "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Aplicacion\\Aplicacion.csproj": {
+    "C:\\Users\\arcek\\Music\\incidencesPoject\\Aplicacion\\Aplicacion.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Aplicacion\\Aplicacion.csproj",
+        "projectUniqueName": "C:\\Users\\arcek\\Music\\incidencesPoject\\Aplicacion\\Aplicacion.csproj",
         "projectName": "Aplicacion",
-        "projectPath": "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Aplicacion\\Aplicacion.csproj",
+        "projectPath": "C:\\Users\\arcek\\Music\\incidencesPoject\\Aplicacion\\Aplicacion.csproj",
         "packagesPath": "C:\\Users\\arcek\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Aplicacion\\obj\\",
+        "outputPath": "C:\\Users\\arcek\\Music\\incidencesPoject\\Aplicacion\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\arcek\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -26,11 +26,11 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Dominio\\Dominio.csproj": {
-                "projectPath": "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Dominio\\Dominio.csproj"
+              "C:\\Users\\arcek\\Music\\incidencesPoject\\Dominio\\Dominio.csproj": {
+                "projectPath": "C:\\Users\\arcek\\Music\\incidencesPoject\\Dominio\\Dominio.csproj"
               },
-              "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Persistencia\\Persistencia.csproj": {
-                "projectPath": "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Persistencia\\Persistencia.csproj"
+              "C:\\Users\\arcek\\Music\\incidencesPoject\\Persistencia\\Persistencia.csproj": {
+                "projectPath": "C:\\Users\\arcek\\Music\\incidencesPoject\\Persistencia\\Persistencia.csproj"
               }
             }
           }
@@ -64,14 +64,14 @@
         }
       }
     },
-    "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Dominio\\Dominio.csproj": {
+    "C:\\Users\\arcek\\Music\\incidencesPoject\\Dominio\\Dominio.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Dominio\\Dominio.csproj",
+        "projectUniqueName": "C:\\Users\\arcek\\Music\\incidencesPoject\\Dominio\\Dominio.csproj",
         "projectName": "Dominio",
-        "projectPath": "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Dominio\\Dominio.csproj",
+        "projectPath": "C:\\Users\\arcek\\Music\\incidencesPoject\\Dominio\\Dominio.csproj",
         "packagesPath": "C:\\Users\\arcek\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Dominio\\obj\\",
+        "outputPath": "C:\\Users\\arcek\\Music\\incidencesPoject\\Dominio\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\arcek\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -131,14 +131,14 @@
         }
       }
     },
-    "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Persistencia\\Persistencia.csproj": {
+    "C:\\Users\\arcek\\Music\\incidencesPoject\\Persistencia\\Persistencia.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Persistencia\\Persistencia.csproj",
+        "projectUniqueName": "C:\\Users\\arcek\\Music\\incidencesPoject\\Persistencia\\Persistencia.csproj",
         "projectName": "Persistencia",
-        "projectPath": "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Persistencia\\Persistencia.csproj",
+        "projectPath": "C:\\Users\\arcek\\Music\\incidencesPoject\\Persistencia\\Persistencia.csproj",
         "packagesPath": "C:\\Users\\arcek\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Persistencia\\obj\\",
+        "outputPath": "C:\\Users\\arcek\\Music\\incidencesPoject\\Persistencia\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\arcek\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -153,8 +153,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Dominio\\Dominio.csproj": {
-                "projectPath": "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Dominio\\Dominio.csproj"
+              "C:\\Users\\arcek\\Music\\incidencesPoject\\Dominio\\Dominio.csproj": {
+                "projectPath": "C:\\Users\\arcek\\Music\\incidencesPoject\\Dominio\\Dominio.csproj"
               }
             }
           }

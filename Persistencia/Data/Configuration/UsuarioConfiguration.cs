@@ -13,7 +13,6 @@ public class UserConfiguration : IEntityTypeConfiguration<Usuario>
 
         builder.Property(p => p.Id)
         .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
-        .HasColumnName("Id_User")
         .HasColumnType("int")
         .IsRequired();
 
@@ -38,9 +37,9 @@ public class UserConfiguration : IEntityTypeConfiguration<Usuario>
         .IsRequired();
 
         builder
-        .HasMany(p => p.Rol)
+        .HasMany(p => p.Roles)
         .WithMany(r => r.Usuario)
-        .UsingEntity<UsuarioRoles>(
+        .UsingEntity<UsuarioRol>(
 
            j => j
            .HasOne(pt => pt.Rol)
@@ -50,7 +49,7 @@ public class UserConfiguration : IEntityTypeConfiguration<Usuario>
 
            j => j
            .HasOne(et => et.Usuario)
-           .WithMany(et => et.UsuariosRoles)
+           .WithMany(et => et.UsuariosRol)
            .HasForeignKey(el => el.UserId),
 
            j =>

@@ -3,9 +3,6 @@ using AutoMapper;
 using Entities;
 using Api.Dtos;
 
-
-
-
 namespace InsidenceAPI.Profiles;
 
 public class MappingPofiles : Profile
@@ -28,6 +25,7 @@ public class MappingPofiles : Profile
         CreateMap<NivelIncidencia, NivelIncidenciaDto>().ReverseMap();
         CreateMap<Perisferico , PerisfericoDto>().ReverseMap();
         CreateMap<RolDto , Rol>().ReverseMap();
+        CreateMap<UsuarioDto , Usuario>().ReverseMap();
         
 
         CreateMap<Area ,AreaxLugarDto>().ReverseMap();

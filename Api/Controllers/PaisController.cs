@@ -19,7 +19,7 @@ public class PaisController : BaseApiController
 
     public PaisController(IUnitOfWork unitOfWork, IMapper mapper)
     {
-        this._unitOfWork = unitOfWork;
+        _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
    /* [HttpGet]
@@ -31,7 +31,7 @@ public class PaisController : BaseApiController
         return Ok(regiones);
     }*/
     [HttpGet]
-    [Authorize(Roles = "Administrador")]
+    [Authorize]
     [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -79,8 +79,8 @@ public class PaisController : BaseApiController
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<Pais>> Post(PaisDto paisDto){
-        var paises = _mapper.Map<NivelIncidencia>(paisDto);
-        this._unitOfWork.NivelIncidencias.Add(paises);
+        var paises = _mapper.Map<Pais>(paisDto);
+        _unitOfWork.Paises.Add(paises);
         await _unitOfWork.SaveAsync();
         if (paises == null)
         {

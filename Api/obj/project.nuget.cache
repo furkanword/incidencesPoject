@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Eb59+zaqEF1m/7IEkC07xMF4YQNZ28+NJwW9Vnh1eM18wtEONJg49PHC7SrHCZdXzA5dCNzoluvja9c34sAVQw==",
+  "dgSpecHash": "WUSFrBugK72J5hm9b3geXZu7n+xgFZURaiuqqM7w1wt66+8HNVCBQ2qsI/J2RQ0zXklYRo3dvE1Na0kYXCHeVA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\arcek\\OneDrive\\Imágenes\\incidencesPoject\\Api\\Api.csproj",
+  "projectFilePath": "C:\\Users\\arcek\\Music\\incidencesPoject\\Api\\Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\arcek\\.nuget\\packages\\aspnetcoreratelimit\\5.0.0\\aspnetcoreratelimit.5.0.0.nupkg.sha512",
     "C:\\Users\\arcek\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",

@@ -34,3 +34,15 @@ C:\Users\arcek\OneDrive\Imágenes\incidencesPoject\Dominio\bin\Debug\net7.0\Domi
 C:\Users\arcek\OneDrive\Imágenes\incidencesPoject\Dominio\bin\Debug\net7.0\Dominio.dll
 C:\Users\arcek\OneDrive\Imágenes\incidencesPoject\Dominio\bin\Debug\net7.0\Dominio.pdb
 C:\Users\arcek\OneDrive\Imágenes\incidencesPoject\Dominio\obj\Debug\net7.0\ref\Dominio.dll
+C:\Users\arcek\Music\incidencesPoject\Dominio\bin\Debug\net7.0\Dominio.deps.json
+C:\Users\arcek\Music\incidencesPoject\Dominio\bin\Debug\net7.0\Dominio.dll
+C:\Users\arcek\Music\incidencesPoject\Dominio\bin\Debug\net7.0\Dominio.pdb
+C:\Users\arcek\Music\incidencesPoject\Dominio\obj\Debug\net7.0\Dominio.csproj.AssemblyReference.cache
+C:\Users\arcek\Music\incidencesPoject\Dominio\obj\Debug\net7.0\Dominio.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\arcek\Music\incidencesPoject\Dominio\obj\Debug\net7.0\Dominio.AssemblyInfoInputs.cache
+C:\Users\arcek\Music\incidencesPoject\Dominio\obj\Debug\net7.0\Dominio.AssemblyInfo.cs
+C:\Users\arcek\Music\incidencesPoject\Dominio\obj\Debug\net7.0\Dominio.csproj.CoreCompileInputs.cache
+C:\Users\arcek\Music\incidencesPoject\Dominio\obj\Debug\net7.0\Dominio.dll
+C:\Users\arcek\Music\incidencesPoject\Dominio\obj\Debug\net7.0\refint\Dominio.dll
+C:\Users\arcek\Music\incidencesPoject\Dominio\obj\Debug\net7.0\Dominio.pdb
+C:\Users\arcek\Music\incidencesPoject\Dominio\obj\Debug\net7.0\ref\Dominio.dll

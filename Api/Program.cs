@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Text;
 using ApiIncidencias.Extensions;
+using AspNetCoreRateLimit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -21,18 +22,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.ConfigureRatelimiting();
 builder.Services.ConfigureApiVersioning();
 
-var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("6bz%;MVYYM`6tk2/X3jjC}%CRT#QUUt^Qv$OI<=M?3)wWX+T%-9B'xrt(url%s]Yg@Y9LTsCr}g|e@:>{iSCte}Uwye`"));
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>{
-    opt.TokenValidationParameters = new TokenValidationParameters{
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = key,
-        ValidateAudience = false,
-        ValidateIssuer = false
-    };
-});
 builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
 builder.Services.ConfigureCors();
 builder.Services.AddAplicacionServices();
+builder.Services.AddJwt(builder.Configuration); //definir los parametros del JWT para añadir
 builder.Services.AddDbContext<ApiContext>(options =>
 {
     string connectionString = builder.Configuration.GetConnectionString("connection")!;
@@ -47,9 +40,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseIpRateLimiting();
+app.UseCors("CorsPolicy");
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
